@@ -22,7 +22,7 @@
 
 ## 自动测时结果
 
-[timecost/README.md](../ProjectEulerTimeCost/README.md)
+[../ProjectEulerTimeCost/README.md](../ProjectEulerTimeCost/README.md)
 
 根据结果绘制图片, 大于1min红色
 
