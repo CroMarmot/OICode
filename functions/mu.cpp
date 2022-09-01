@@ -1,15 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
-
 typedef long long ll;
-#define ten5 100000+10
-#define MOD 1000000007
 #define rep(i,a,n) for (int i=a;i<n;i++)
-#define iif(c,t,f) ((c)?(t):(f))
-#define per(i,a,n) for (int i=n-1;i>=a;i--)
-#define pb push_back
-#define mp make_pair
-const double pi = acos(-1.0);
 
 const int maxn = 100000000;
 int prime[maxn], tot, mu[maxn];
