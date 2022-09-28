@@ -6,7 +6,7 @@ typedef long long ll;
 const int maxn = 100000000;
 int prime[maxn], tot, mu[maxn];
 bool check[maxn];
-void calmu(){
+void CalMu(){
   mu[1] = 1;
   rep(i,2,maxn){
     if (!check[i]){
@@ -26,5 +26,6 @@ void calmu(){
 }
 int main(){
   CalMu();
+  rep(i,1,20) printf("mu[%d] = %d\n",i,mu[i]);
   return 0;
 }

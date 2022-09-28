@@ -42,41 +42,33 @@ public:
   }
 
   bool calc(vector<bool> & ans){
-    rep(i,0,2*n) if(res[i] == -1) scc(i);
-    // rep(i,0,2*n) printf("scc[%lld] = %d\n",i,res[i]);
-    rep(i,0,n) if(res[i*2] == res[i*2+1]) return false; // 同一个块的真假都在一个scc里
+    rep(i,0,2*n) if(res[i]==-1)scc(i);
+    rep(i,0,n) if(res[i*2]==res[i*2+1])return false; // 同一个块的真假都在一个scc里
     vector<int> revscc(2*n); // 互斥scc
-    rep(i,0,n) {
+    rep(i,0,n) { // 每个点的true/false 状态互斥
       revscc[res[i*2]] = res[i*2+1];
       revscc[res[i*2+1]] = res[i*2];
     }
     vector<set<int> > scc2scc(2*n);
     unordered_map<int,int> degree; // scc入度
-    unordered_map<int,bool> scctf; // scc 真假
-    rep(i,0,2*n) { // 跨scc的反向边, 做拓扑选择
+    rep(i,0,2*n) { // 跨scc的反向边, 做拓扑选择, (因为scc计算后,剩下的一定是偏序不会有环)
       degree[res[i]] = 0;
-      for(auto j:p[i]){ // i -> j
-        if(res[i] == res[j]) continue;
-        scc2scc[res[j]].insert(res[i]);
-      }
+      for(auto j:p[i]) if(res[i]!=res[j]) scc2scc[res[j]].insert(res[i]); // i -> j 反向边
     }
-    for(auto s:scc2scc){
-      for(auto t:s) degree[t]++;
-    }
+    for(auto &s:scc2scc) for(auto t:s) degree[t]++;
     vector<int> d0; // 入度为0
     for(auto [v,d]: degree) if(!d) d0.pb(v);
+    unordered_map<int,bool> sccpick; // scc 选/不选
     rep(i,0,d0.size()) {
-      if(!scctf.count(d0[i])){ // 没有选择过
-        // printf("pick %d, unpick %d\n",d0[i],revscc[d0[i]]);
-        scctf[d0[i]] = true;
-        scctf[revscc[d0[i]]] = false;
+      if(!sccpick.count(d0[i])){ // 没有计算过
+        // prinpick("pick %d, unpick %d\n",d0[i],revscc[d0[i]]);
+        sccpick[d0[i]] = true;
+        sccpick[revscc[d0[i]]] = false;
       }
-      for(auto item:scc2scc[d0[i]]) { // 更新入度排序
-        if(!(--degree[item])) d0.pb(item);
-      }
+      for(auto item:scc2scc[d0[i]]) if(!(--degree[item])) d0.pb(item); // 更新入度排序
     }
     ans = vector<bool>(n);
-    rep(i,0,n) ans[i] = scctf[res[i*2+1]];
+    rep(i,0,n) ans[i] = sccpick[res[i*2+1]];
     return true;
   }
   void p2(pair<int,bool> pi, pair<int,bool> pj){ // {i,true/false} -> {j,true/false}
@@ -85,7 +77,7 @@ public:
     assert(i >= 0 && i < n);
     assert(j >= 0 && j < n);
     p[2*i+bi].pb(2*j+bj);
-    p[2*j+(!bj)].pb(2*i+(!bi)); // 自动建立逻辑边
+    if(2*i+bi!=2*j+(!bj))p[2*j+(!bj)].pb(2*i+(!bi)); // 自动建立逻辑边
   }
 };
 
