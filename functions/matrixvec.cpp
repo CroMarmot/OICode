@@ -47,6 +47,21 @@ namespace MatrixVec{
       return r;
     }
 
+  template<class T>
+    vector<vector<T>> pow(vector<vector<T>> a,ll pwr){ // 矩阵幂次
+      auto n=a.size();
+      if(n==0)return {};
+      assert(n==a[0].size());
+      auto r=vector(n,vector<T>(n,0));
+      rep(i,0,n)r[i][i]=1;
+      while(pwr){
+        if(pwr%2)r=mul(r,a);
+        a=mul(a,a);
+        pwr/=2;
+      }
+      return r;
+    }
+
   void printmint(const vector<vector<mint>>& a){ // 打印mint
     auto n=a.size();
     if(n==0)return ;
