@@ -1,16 +1,12 @@
 #include <bits/stdc++.h>
 using namespace std;
-
 typedef long long ll;
-#define MOD 1000000007
 #define rep(i,a,n) for (ll i=a;i<n;i++)
-#define per(i,a,n) for (ll i=n;i-->(ll)a;)
-#define pb push_back
 
 // 0-index + vector + sort
 // sa 下标按照顺序排列
 // rank 下标对应顺序index
-// h sa 中相邻后缀 最长公共前缀 h[0] = 0;
+// h sa 中相邻后缀 最长公共前缀 h[0] = 0; h[i] = 最长公共前缀(s[sa[i]..],s[sa[i-1]..])
 template<class T>
 void calc_sa_rank(vector<T>& arr, vector<int> &sa,vector<int> &rank, vector<int>&h){
   int n = arr.size();
@@ -45,7 +41,7 @@ int main() {
   int n = strlen(s) ;
   printf("s:%s\n",s);
   vector<char> arr ;
-  rep(i,0,n) arr.pb(s[i]);
+  rep(i,0,n) arr.push_back(s[i]);
   vector<int> sa;
   vector<int> rank;
   vector<int> h;

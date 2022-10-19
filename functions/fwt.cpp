@@ -12,10 +12,10 @@ using MODINT::modint;
 namespace FWT{
   void ForT(vector<modint> &f,int flag = 1/* 1:正变换,-1:逆变换 */) {
     int n = f.size();
-    for (int k = 1; k < n; k *=2){
-      for (int i = 0; i < n; i += 2*k){
-        for (int j = 0; j < k; j++){
-          f[i+j+k] += f[i+j] * flag;
+    for (int l=1; l<n; l*=2){
+      for (int s=0; s<n; s+=2*l){
+        rep(i,s,s+l){ // [i..i+l)<=>[i+l..i+2l)
+          f[i+l] += f[i] * flag;
         }
       }
     }
@@ -35,10 +35,10 @@ namespace FWT{
 
   void FandT(vector<modint> &f, int flag = 1/* 1:正变换,-1:逆变换 */) {
     int n = f.size();
-    for (int k = 1; k < n; k *=2){
-      for (int i = 0; i < n; i += 2*k){
-        for (int j = 0; j < k; j++){
-          f[i+j] += f[i+j+k] * flag;
+    for (int l=1; l<n; l*=2){
+      for (int s=0; s<n; s+=2*l){
+        rep(i,s,s+l){ // [i..i+l)<=>[i+l..i+2l)
+          f[i] += f[i+l] * flag;
         }
       }
     }
@@ -58,15 +58,13 @@ namespace FWT{
   modint inv2 = modint(2).inv();
   void FWHT(vector<modint> &f, modint flag = 1 /* 1: 正变换, 1/2: 逆变换*/) {
     int n = f.size();
-    for (int k = 1; k < n; k *=2){
-      for (int i = 0; i < n; i += 2*k){
-        for (int j = 0; j < k; j++){
-          auto U = f[i+j];
-          auto T = f[i+j+k];
-          f[i+j]   = U + T;
-          f[i+j+k] = U - T;
-          f[i+j] *= flag;
-          f[i+j+k] *= flag;
+    for(int l=1; l<n; l*=2){ // len
+      for (int s=0; s<n; s+=2*l){ // start pos
+        rep(i,s,s+l){ // [i..i+l) <=> [i+l,i+2l)
+          auto U = f[i];
+          auto T = f[i+l];
+          f[i]   = (U+T)*flag;
+          f[i+l] = (U-T)*flag;
         }
       }
     }
