@@ -34,6 +34,48 @@ namespace MatrixVec{
       return ans;
     }
 
+  // 行列式 高斯消元 解增广矩阵, 答案全为mint
+  // {是否成功, 消元后的增广矩阵(左边nxn 为单位矩阵)}
+  pair<bool,vector<vector<mint>>> solvemint(const vector<vector<mint>>& _a){
+    auto a=_a;
+    auto n=a.size(); // 行
+    if(n==0) return {true,{}};
+    assert(n < a[0].size()); // 增广
+    rep(j,0,n){
+      rep(i,j,n)if(a[i][j]!=0){ // >=j行中找j列首个非零值,做行交换
+        if(i!=j) std::swap(a[i],a[j]);
+        break;
+      }
+      if(a[j][j]==0) return {false,{}};
+      mint t=a[j][j].inv(); // 少做除法
+      per(k,j,a[j].size()) a[j][k]*=t;
+      rep(i,0,n)if(i!=j)per(k,j,a[i].size())a[i][k]-=a[i][j]*a[j][k]; // 行变换, 注意per顺序
+    }
+    return {true,a};
+  }
+
+  // 行列式 高斯消元 解增广矩阵, 答案全为整数
+  // {是否成功, 消元后的增广矩阵(左边nxn 为单位矩阵)}
+  pair<bool,vector<vector<ll>>> solvell(const vector<vector<ll>>& _a){
+    auto a=_a;
+    auto n=a.size(); // 行
+    if(n==0) return {true,{}};
+    assert(n < a[0].size()); // 增广
+    rep(j,0,n){
+      rep(i,j,n)if(a[i][j]!=0){ // >=j行中找j列首个非零值,做行交换
+        if(i!=j) std::swap(a[i],a[j]);
+        break;
+      }
+      if(a[j][j]==0) return {false,{}};
+      per(k,j,a[j].size()){ // 保证答案全为整数, 注意顺序
+        if(a[j][k] % a[j][j] !=0) return {false,{}};
+        a[j][k]/=a[j][j];
+      }
+      rep(i,0,n) if(i!=j)per(k,j,a[i].size())a[i][k]-=a[i][j]*a[j][k]; // 行变换, 注意per顺序
+    }
+    return {true,a};
+  }
+
   template<class T>
     vector<vector<T>> mul(const vector<vector<T>>& a,const vector<vector<T>>&b){// 矩阵乘法
       auto n=a.size();
