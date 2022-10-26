@@ -1,20 +1,12 @@
 #include <bits/stdc++.h>
-using namespace std;
-
-typedef long long ll;
-#define MOD 1000000007
-#define rep(i,a,n) for (ll i=a;i<n;i++)
-#define per(i,a,n) for (ll i=n;i-->(ll)a;)
-#define pb push_back
-
-namespace MODINT{
+namespace CMM{
   const int _mod = 998244353;
   class modint{
     private:
-      ll _v;
+      long long _v;
     public:
       modint() :_v(0) {  }
-      modint(ll _a) {
+      modint(long long _a) {
         _v = (_a < 0)? _mod - ((-_a) % _mod) : (_a % _mod);
       }
 
@@ -49,9 +41,9 @@ namespace MODINT{
         _v = _v * rhs.inv().val() % _mod ;
         return *this;
       }
-      modint pow(ll pwr) const {
-        ll res(1);
-        ll _b(_v);
+      modint pow(long long pwr) const {
+        long long res(1);
+        long long _b(_v);
         while (pwr) {
           if (pwr & 1) (res *= _b) %= _mod;
           (_b *= _b) %= _mod;
@@ -65,10 +57,3 @@ namespace MODINT{
       }
   };
 };
-
-// int main(){
-//   MODINT::modint a = 100000;
-//   MODINT::modint b = 100000;
-//   printf("%d\n", (a * b).val());
-//   return 0;
-// }

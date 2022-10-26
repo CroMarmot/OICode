@@ -1,45 +1,19 @@
-#include<iostream>
-using namespace std;
-typedef long long ll;
-#define rep(i,a,n) for (int i=a;i<n;i++)
-
-ll read(){ll r;scanf("%lld",&r);return r;} // read
-int n;
-int MOD;
-
-struct ModInt{
-  int v;
-  ModInt(ll val = 0) :v(val) { }
-};
-
-ll real(const ModInt & v0){
-  return (v0.v + MOD) % MOD;
-}
-
-ModInt operator+(const ModInt & v0, const ModInt &v1){
-  return (v0.v + v1.v) % MOD;
-}
-
-ModInt operator-(const ModInt & v0, const ModInt &v1){
-  return (v0.v - v1.v) % MOD;
-}
-
-ModInt operator*(const ModInt & v0, const ModInt &v1){
-  return ((ll)v0.v * (ll)v1.v) % MOD;
-}
-
-ModInt fac[2010] = {1};
-ModInt invv[2010] = {1};
-ModInt invfac[2010] = {1};
-ModInt C(int n,int m) { return fac[n] * invfac[m] * invfac[n-m]; }
-
-int main(){
-  n = read();
-  MOD = read();
-
-  // 30 ms
-  rep(i,1,n+1) fac[i] = fac[i-1] * i;
-  invv[1] = 1;
-  rep(i,2,n+1) invv[i] = (MOD-MOD/i) * invv[MOD%i];
-  rep(i,1,n+1) invfac[i] = invfac[i-1] * invv[i];
+#include<bits/stdc++.h>
+namespace CMM{ // inv fac ifac
+  template<class T>
+  std::vector<T>get_inv(int n, int MOD){ // return [0..n]
+    std::vector<T> inv(n+1,0);
+    inv[1]=1;
+    for(int i=2;i<=n;i++)inv[i]=inv[MOD%i]*(MOD-MOD/i);
+    return inv;
+  }
+  template<class T>
+  std::pair<std::vector<T>,std::vector<T>> get_fac_ifac(int n){ // return [0..n]
+    std::vector<T> fac(n+1,1);
+    std::vector<T> ifac(n+1,1);
+    for(int i=1;i<=n;i++)fac[i]=fac[i-1]*i;
+    ifac[n]=fac[n].inv();
+    for(int i=n;i-->0;)ifac[i]=ifac[i+1]*(i+1);
+    return {fac,ifac};
+  }
 }
