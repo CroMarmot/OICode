@@ -9,10 +9,10 @@ namespace CMM{
     public:
       Poly(const std::vector<T> &d):_d(d){};
       friend Poly operator+(const Poly&p0,const Poly&p1){
-        Poly p{p0._d};
-        if(size(p1)>size(p))p.resize(std::size(p1));
-        for(int i=0;i<(int)std::size(p1);i++)p[i]+=p1[i];
-        return p;
+        std::vector<T>r=p0._d;
+        if(p1._d.size()>r.size())r.resize(p1._d.size());
+        for(int i=0;i<(int)p1._d.size();i++)r[i]+=p1._d[i];
+        return r;
       }
       friend Poly operator-(const Poly&p0,const Poly&p1){
         std::vector<T>r=p0._d;
