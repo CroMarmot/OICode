@@ -19,6 +19,6 @@ namespace CMM{
       assert(v > 0 && v <= _n && v < MOD);
       return _inv[v];
     }
-    T binom(int n,int m)const{ return fac[n] * ifac[m] * ifac[n-m]; }
+    T binom(int n,int m)const{ return (m>n||m<0)?0:fac[n] * ifac[m] * ifac[n-m]; }
   };
 }

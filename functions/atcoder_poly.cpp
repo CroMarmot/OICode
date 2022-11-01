@@ -7,7 +7,7 @@ namespace CMM{
     class Poly{
       std::vector<T>_d;
     public:
-      Poly(const std::vector<T> &d):_d(d){};
+      Poly(const std::vector<T> &d={}):_d(d){};
       friend Poly operator+(const Poly&p0,const Poly&p1){
         std::vector<T>r=p0._d;
         if(p1._d.size()>r.size())r.resize(p1._d.size());
