@@ -14,7 +14,7 @@ void calc_sa_rank(vector<T>& arr, vector<int> &sa,vector<int> &rank, vector<int>
   sa = vector<int>(n);
   iota(sa.begin(),sa.end(),0);
   rep(i,0,n) rank[i]=arr[i];
-  for(int w=1; w<=n; w*=2) {
+  for(int w=1; w<=2*n; w*=2) {
     vector<pair<int,int>>val;
     rep(i,0,n)val.push_back({rank[i],i+w/2<n?rank[i+w/2]:-1});
     sort(sa.begin(),sa.end(), [&](int i,int j){ return val[i]<val[j]; });
