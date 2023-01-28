@@ -1,5 +1,4 @@
 #include <bits/stdc++.h>
-
 template<class T>
 using Point = std::pair<T, T>;
 
@@ -35,11 +34,11 @@ public:
       }
     }
   }
-  ConvexHull(const ConvexHull& a, const ConvexHull& b){ // 两个凸包合并
+  ConvexHull(const ConvexHull<T>& a, const ConvexHull<T>& b){ // 两个凸包合并
     {
       std::vector<Point<T>> v; // 逆时针弧
       std::merge(a.lower.begin(), a.lower.end(), b.lower.begin(), b.lower.end(), back_inserter(v)); // 本身a,b下标有序, merge 会按pair的比较的排序
-      for(Point p : v){
+      for(Point<T> p : v){
         while(lower.size() >= 2 && cross(lower.rbegin()[1], lower.back(), p) <= 0) lower.pop_back();
         lower.push_back(p);
       }
@@ -47,7 +46,7 @@ public:
     {
       std::vector<Point<T>> v; // 顺时针弧
       std::merge(a.upper.begin(), a.upper.end(), b.upper.begin(), b.upper.end(), back_inserter(v)); // 本身a,b下标有序, merge 会按pair的比较的排序
-      for(Point p : v){
+      for(Point<T> p : v){
         while(upper.size() >= 2 && cross(upper.rbegin()[1], upper.back(), p) >= 0) upper.pop_back();
         upper.push_back(p);
       }
@@ -55,6 +54,7 @@ public:
   }
 };
 
+// --- template ConvexHull ---
 
 int main(){
   using ll=long long;
@@ -70,8 +70,6 @@ int main(){
       S.rbegin()[1] = ConvexHull(S.rbegin()[1], S.back());
       S.pop_back();
     }
-    ll ans = -0x3f3f3f3f3f3f3f3f;
-    printf("%lld\n",ans);
   }
   return 0;
 }
