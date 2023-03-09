@@ -33,7 +33,7 @@ class Tarjan{
     }
   }
 public:
-  Tarjan(int SZ):n(SZ){
+  Tarjan(int SZ):n(SZ){ // 1-index, [1..SZ]
     low = vector<int>(n+1);
     dfn = vector<int>(n+1);
     stk = {};
