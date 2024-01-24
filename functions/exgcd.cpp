@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// 返回的 [x,y,z] 满足 a*x+b*y=z=gcd(a,b)
+// 返回的 [x,y,z] 满足 a*x+b*y=z=gcd(a,b), 这样不会overflow
 template<class T>
 array<T,3> exgcd(T a,T b){
   if(b==0) return {1,0,a};
